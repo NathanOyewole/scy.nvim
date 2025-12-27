@@ -3,64 +3,52 @@ return {
 	-- ===============================
 	-- 0️⃣ Theme
 	-- ===============================
-
 	{
 		"catppuccin/nvim",
 		name = "catppuccin",
 		priority = 1000,
 		config = function()
-			require("catppuccin").setup({
-				flavour = "mocha",
-			})
+			require("catppuccin").setup({ flavour = "mocha" })
 		end,
 	},
-
 	{
 		"folke/tokyonight.nvim",
 		config = function()
 			require("tokyonight").setup({ style = "storm" })
 		end,
 	},
-
 	{
 		"ellisonleao/gruvbox.nvim",
 		config = function()
 			require("gruvbox").setup({ contrast = "hard" })
 		end,
 	},
-
 	{
 		"navarasu/onedark.nvim",
 		config = function()
 			require("onedark").setup({ style = "deep" })
 		end,
 	},
-
 	{ "sainnhe/everforest" },
-
 	{
 		"EdenEast/nightfox.nvim",
 		config = function()
 			require("nightfox").setup({})
 		end,
 	},
-
 	{
 		"rebelot/kanagawa.nvim",
 		config = function()
 			require("kanagawa").setup({})
 		end,
 	},
-
 	{
 		"shaunsingh/nord.nvim",
 		config = function()
 			require("nord").set()
 		end,
 	},
-
 	{ "NLKNguyen/papercolor-theme" },
-
 	{ "bluz71/vim-moonfly-colors" },
 
 	-- ===============================
@@ -68,49 +56,74 @@ return {
 	-- ===============================
 	{
 		"nvim-telescope/telescope.nvim",
+		cmd = "Telescope",
 		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function()
+			require("telescope").setup({
+				defaults = {
+					layout_strategy = "horizontal",
+					layout_config = { preview_width = 0.55 },
+					sorting_strategy = "ascending",
+					winblend = 0,
+				},
+			})
+		end,
 		keys = {
 			{
 				"<C-p>",
 				function()
 					require("telescope.builtin").find_files()
 				end,
+				mode = "n",
+				desc = "Find files",
 			},
 			{
 				"<leader>fg",
 				function()
 					require("telescope.builtin").live_grep()
 				end,
+				mode = "n",
+				desc = "Live grep",
 			},
 			{
 				"<leader>fb",
 				function()
 					require("telescope.builtin").buffers()
 				end,
+				mode = "n",
+				desc = "Buffers",
 			},
 			{
 				"<leader>fh",
 				function()
 					require("telescope.builtin").help_tags()
 				end,
+				mode = "n",
+				desc = "Help tags",
 			},
 			{
 				"<leader>gc",
 				function()
 					require("telescope.builtin").git_commits()
 				end,
+				mode = "n",
+				desc = "Git commits",
 			},
 			{
 				"<leader>gb",
 				function()
 					require("telescope.builtin").git_branches()
 				end,
+				mode = "n",
+				desc = "Git branches",
 			},
 			{
 				"<leader>gs",
 				function()
 					require("telescope.builtin").git_status()
 				end,
+				mode = "n",
+				desc = "Git status",
 			},
 		},
 	},
@@ -123,14 +136,13 @@ return {
 		build = ":TSUpdate",
 		config = function()
 			local ok, configs = pcall(require, "nvim-treesitter.configs")
-			if not ok then
-				return
+			if ok then
+				configs.setup({
+					ensure_installed = { "lua", "javascript", "typescript", "bash", "json" },
+					highlight = { enable = true },
+					indent = { enable = true },
+				})
 			end
-			configs.setup({
-				ensure_installed = { "lua", "javascript", "typescript", "bash", "json" },
-				highlight = { enable = true },
-				indent = { enable = true },
-			})
 		end,
 	},
 
@@ -140,11 +152,7 @@ return {
 	{
 		"nvim-neo-tree/neo-tree.nvim",
 		branch = "v3.x",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-tree/nvim-web-devicons",
-			"MunifTanjim/nui.nvim",
-		},
+		dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons", "MunifTanjim/nui.nvim" },
 		keys = {
 			{
 				"<Space>e",
@@ -231,19 +239,12 @@ return {
 	-- ===============================
 	-- 5️⃣ Auto pairs
 	-- ===============================
-	{
-		"windwp/nvim-autopairs",
-		event = "InsertEnter",
-		config = true,
-	},
+	{ "windwp/nvim-autopairs", event = "InsertEnter", config = true },
 
 	-- ===============================
 	-- 6️⃣ Comment toggling
 	-- ===============================
-	{
-		"numToStr/Comment.nvim",
-		config = true,
-	},
+	{ "numToStr/Comment.nvim", config = true },
 
 	-- ===============================
 	-- 7️⃣ Which-key
@@ -270,9 +271,7 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		dependencies = { "williamboman/mason.nvim" },
 		config = function()
-			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "ts_ls", "jsonls", "bashls" },
-			})
+			require("mason-lspconfig").setup({ ensure_installed = { "lua_ls", "ts_ls", "jsonls", "bashls" } })
 		end,
 	},
 	{
@@ -378,8 +377,6 @@ return {
 	-- ===============================
 	-- 🔥 NEW Plugins fully configured
 	-- ===============================
-
-	-- Statusline
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -387,8 +384,6 @@ return {
 			require("lualine").setup({ options = { theme = "catppuccin" } })
 		end,
 	},
-
-	-- Dashboard
 	{
 		"goolord/alpha-nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -408,8 +403,6 @@ return {
 			alpha.setup(dashboard.opts)
 		end,
 	},
-
-	-- Terminal
 	{
 		"akinsho/toggleterm.nvim",
 		version = "*",
@@ -422,20 +415,12 @@ return {
 			})
 		end,
 	},
-
-	-- LSP Signature
 	{
 		"ray-x/lsp_signature.nvim",
 		config = function()
-			require("lsp_signature").setup({
-				bind = true,
-				floating_window = true,
-				hint_enable = true,
-			})
+			require("lsp_signature").setup({ bind = true, floating_window = true, hint_enable = true })
 		end,
 	},
-
-	-- Incremental LSP Rename
 	{
 		"smjonas/inc-rename.nvim",
 		config = function()
@@ -443,28 +428,31 @@ return {
 		end,
 	},
 
-	-- Indent Guides
+	-- ===============================
+	-- 🔹 Indent-Blankline (after Treesitter)
+	-- ===============================
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		version = "2.20.8",
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		event = "BufReadPost",
 		config = function()
 			require("indent_blankline").setup({
 				char = "│",
 				show_trailing_blankline_indent = true,
 				show_current_context = true,
 				show_current_context_start = true,
-
 				use_treesitter = true,
-
-				filetype_exclude = {
-					"help",
-					"alpha",
-					"dashboard",
-					"neo-tree",
-					"toggleterm",
-				},
-
+				filetype_exclude = { "help", "alpha", "dashboard", "neo-tree", "toggleterm" },
 				buftype_exclude = { "terminal", "nofile" },
+			})
+
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "IndentBlanklineReady",
+				callback = function()
+					vim.cmd([[highlight IndentBlanklineChar guifg=#3b4048]])
+					vim.cmd([[highlight IndentBlanklineContextChar guifg=#7f848e]])
+				end,
 			})
 		end,
 	},

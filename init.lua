@@ -40,10 +40,21 @@ require("keymaps")
 -- ===============================
 -- Colorscheme (AFTER plugins load)
 -- ===============================
-vim.cmd.colorscheme("tokyonight")
+vim.cmd.colorscheme("PaperColor")
 
 -- ===============================
 -- IndentBlankline (v2) highlights
 -- ===============================
 vim.cmd([[highlight IndentBlanklineChar guifg=#3b4048]])
 vim.cmd([[highlight IndentBlanklineContextChar guifg=#7f848e]])
+
+-- ===============================
+-- IndentBlankline lazy highlights
+-- ===============================
+vim.api.nvim_create_autocmd("User", {
+	pattern = "IndentBlanklineReady",
+	callback = function()
+		vim.cmd([[highlight IndentBlanklineChar guifg=#3b4048]])
+		vim.cmd([[highlight IndentBlanklineContextChar guifg=#7f848e]])
+	end,
+})
