@@ -3,15 +3,65 @@ return {
 	-- ===============================
 	-- 0️⃣ Theme
 	-- ===============================
+
 	{
 		"catppuccin/nvim",
 		name = "catppuccin",
 		priority = 1000,
 		config = function()
-			require("catppuccin").setup()
-			vim.cmd.colorscheme("catppuccin")
+			require("catppuccin").setup({
+				flavour = "mocha",
+			})
 		end,
 	},
+
+	{
+		"folke/tokyonight.nvim",
+		config = function()
+			require("tokyonight").setup({ style = "storm" })
+		end,
+	},
+
+	{
+		"ellisonleao/gruvbox.nvim",
+		config = function()
+			require("gruvbox").setup({ contrast = "hard" })
+		end,
+	},
+
+	{
+		"navarasu/onedark.nvim",
+		config = function()
+			require("onedark").setup({ style = "deep" })
+		end,
+	},
+
+	{ "sainnhe/everforest" },
+
+	{
+		"EdenEast/nightfox.nvim",
+		config = function()
+			require("nightfox").setup({})
+		end,
+	},
+
+	{
+		"rebelot/kanagawa.nvim",
+		config = function()
+			require("kanagawa").setup({})
+		end,
+	},
+
+	{
+		"shaunsingh/nord.nvim",
+		config = function()
+			require("nord").set()
+		end,
+	},
+
+	{ "NLKNguyen/papercolor-theme" },
+
+	{ "bluz71/vim-moonfly-colors" },
 
 	-- ===============================
 	-- 1️⃣ Telescope
@@ -169,7 +219,6 @@ return {
 				},
 				format_on_save = { timeout_ms = 500, lsp_fallback = true },
 			})
-
 			vim.api.nvim_create_autocmd("BufWritePre", {
 				pattern = "*",
 				callback = function()
@@ -232,7 +281,7 @@ return {
 		config = function()
 			local lspconfig = require("lspconfig")
 			lspconfig.lua_ls.setup({ settings = { Lua = { diagnostics = { globals = { "vim" } } } } })
-			lspconfig.tsserver.setup({})
+			lspconfig.ts_ls.setup({})
 			lspconfig.jsonls.setup({})
 			lspconfig.bashls.setup({})
 		end,
@@ -245,10 +294,12 @@ return {
 			"hrsh7th/cmp-path",
 			"L3MON4D3/LuaSnip",
 			"saadparwaiz1/cmp_luasnip",
+			"onsails/lspkind-nvim",
 		},
 		config = function()
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
+			local lspkind = require("lspkind")
 			cmp.setup({
 				snippet = {
 					expand = function(args)
@@ -261,6 +312,7 @@ return {
 					["<CR>"] = cmp.mapping.confirm({ select = true }),
 					["<C-Space>"] = cmp.mapping.complete(),
 				}),
+				formatting = { format = lspkind.cmp_format({ with_text = true, maxwidth = 50 }) },
 				sources = cmp.config.sources({
 					{ name = "nvim_lsp" },
 					{ name = "luasnip" },
@@ -290,16 +342,11 @@ return {
 			})
 		end,
 	},
-	{
-		"kdheepak/lazygit.nvim",
-		cmd = "LazyGit",
-	},
+	{ "kdheepak/lazygit.nvim", cmd = "LazyGit" },
 
 	-- ===============================
 	-- 🔥 Extra QoL Plugins
 	-- ===============================
-
-	-- Trouble for diagnostics list
 	{
 		"folke/trouble.nvim",
 		dependencies = "nvim-tree/nvim-web-devicons",
@@ -308,8 +355,6 @@ return {
 			require("trouble").setup({ signs = true, use_diagnostic_signs = true })
 		end,
 	},
-
-	-- Fidget for LSP progress
 	{
 		"j-hui/fidget.nvim",
 		tag = "legacy",
@@ -317,20 +362,110 @@ return {
 			require("fidget").setup({})
 		end,
 	},
-
-	-- Colorizer for highlighting hex/rgb colors
 	{
 		"norcalli/nvim-colorizer.lua",
 		config = function()
 			require("colorizer").setup()
 		end,
 	},
-
-	-- Notify for nicer notifications
 	{
 		"rcarriga/nvim-notify",
 		config = function()
 			vim.notify = require("notify")
+		end,
+	},
+
+	-- ===============================
+	-- 🔥 NEW Plugins fully configured
+	-- ===============================
+
+	-- Statusline
+	{
+		"nvim-lualine/lualine.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function()
+			require("lualine").setup({ options = { theme = "catppuccin" } })
+		end,
+	},
+
+	-- Dashboard
+	{
+		"goolord/alpha-nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function()
+			local alpha = require("alpha")
+			local dashboard = require("alpha.themes.dashboard")
+			dashboard.section.header.val = {
+				"██╗   ██╗ ██████╗ ██╗      █████╗",
+				"██║   ██║██╔═══██╗██║     ██╔══██╗",
+				"██║   ██║██║   ██║██║     ███████║",
+				"██║   ██║██║   ██║██║     ██╔══██║",
+				"╚██████╔╝╚██████╔╝███████╗██║  ██║",
+				" ╚═════╝  ╚═════╝ ╚══════╝╚═╝  ╚═╝",
+				"",
+				"        Welcome, bola!",
+			}
+			alpha.setup(dashboard.opts)
+		end,
+	},
+
+	-- Terminal
+	{
+		"akinsho/toggleterm.nvim",
+		version = "*",
+		config = function()
+			require("toggleterm").setup({
+				size = 15,
+				open_mapping = [[<c-\>]],
+				shade_terminals = true,
+				direction = "horizontal",
+			})
+		end,
+	},
+
+	-- LSP Signature
+	{
+		"ray-x/lsp_signature.nvim",
+		config = function()
+			require("lsp_signature").setup({
+				bind = true,
+				floating_window = true,
+				hint_enable = true,
+			})
+		end,
+	},
+
+	-- Incremental LSP Rename
+	{
+		"smjonas/inc-rename.nvim",
+		config = function()
+			require("inc_rename").setup()
+		end,
+	},
+
+	-- Indent Guides
+	{
+		"lukas-reineke/indent-blankline.nvim",
+		version = "2.20.8",
+		config = function()
+			require("indent_blankline").setup({
+				char = "│",
+				show_trailing_blankline_indent = true,
+				show_current_context = true,
+				show_current_context_start = true,
+
+				use_treesitter = true,
+
+				filetype_exclude = {
+					"help",
+					"alpha",
+					"dashboard",
+					"neo-tree",
+					"toggleterm",
+				},
+
+				buftype_exclude = { "terminal", "nofile" },
+			})
 		end,
 	},
 }
