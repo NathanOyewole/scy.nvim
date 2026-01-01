@@ -116,6 +116,30 @@ end, { desc = "Format file" })
 
 -- ===============================
 -- QUICK QUALITY OF LIFE
--- ===============================
+-- ===============================.feedkeys".run(71)
 vim.keymap.set("n", "<leader>nh", "<cmd>nohlsearch<CR>", { desc = "Clear highlights" })
 vim.keymap.set("n", "<leader>bd", "<cmd>bdelete<CR>", { desc = "Delete buffer" })
+
+-- Add this to the VERY BOTTOM of your keymaps.lua
+local map = vim.keymap.set
+
+-- Normal Mode: Toggle Chat
+map("n", "<leader>cq", function()
+	-- Try to get the plugin, if it fails, 'ok' will be false
+	local ok, chat = pcall(require, "CopilotChat")
+	if not ok then
+		print("AI Chat not loaded yet! Run :Lazy to check installation.")
+		return
+	end
+
+	local input = vim.fn.input("Quick Question: ")
+	if input ~= "" then
+		chat.ask(input, { selection = require("CopilotChat.select").buffer })
+	end
+end, { desc = "AI Quick Question" })
+
+-- Visual Mode: Actions (Explain, Fix, Optimize, Review)
+map("v", "<leader>ce", ":CopilotChatExplain<cr>", { desc = "AI Explain" })
+map("v", "<leader>cf", ":CopilotChatFix<cr>", { desc = "AI Fix" })
+map("v", "<leader>co", ":CopilotChatOptimize<cr>", { desc = "AI Optimize" })
+map("v", "<leader>cr", ":CopilotChatReview<cr>", { desc = "AI Review" })

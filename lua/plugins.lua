@@ -456,4 +456,46 @@ return {
 			})
 		end,
 	},
+
+	-- Copilot (The Engine)
+	{
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		event = "InsertEnter",
+		config = function()
+			require("copilot").setup({
+				suggestion = {
+					enabled = true,
+					auto_trigger = true,
+					keymap = {
+						accept = "<C-f>",
+						next = "<M-]>",
+						prev = "<M-[>",
+						dismiss = "<C-]>",
+					},
+				},
+				panel = { enabled = false },
+			})
+		end,
+	},
+
+	-- Copilot Chat (The UI)
+	{
+		"CopilotC-Nvim/CopilotChat.nvim",
+		branch = "main",
+		dependencies = {
+			{ "zbirenbaum/copilot.lua" },
+			{ "nvim-lua/plenary.nvim" },
+		},
+		opts = {
+			debug = false,
+			window = {
+				layout = "float",
+				relative = "editor",
+				width = 0.8,
+				height = 0.8,
+				row = 1,
+			},
+		},
+	},
 }
