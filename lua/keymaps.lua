@@ -57,7 +57,6 @@ vim.keymap.set("n", "<leader>sh", "<cmd>split<CR>", { desc = "Horizontal split" 
 -- Toggle default terminal
 vim.keymap.set("n", "<C-\\>", "<cmd>ToggleTerm<CR>", { desc = "Toggle Terminal" })
 
--- Terminal directions
 vim.keymap.set("n", "<leader>th", "<cmd>ToggleTerm direction=horizontal<CR>", { desc = "Terminal Horizontal" })
 vim.keymap.set("n", "<leader>tv", "<cmd>ToggleTerm direction=vertical size=60<CR>", { desc = "Terminal Vertical" })
 vim.keymap.set("n", "<leader>tf", "<cmd>ToggleTerm direction=float<CR>", { desc = "Terminal Float" })
@@ -139,7 +138,7 @@ map("n", "<leader>cq", function()
 end, { desc = "AI Quick Question" })
 
 -- Visual Mode: Actions (Explain, Fix, Optimize, Review)
-map("v", "<leader>ce", ":CopilotChatExplain<cr>", { desc = "AI Explain" })
-map("v", "<leader>cf", ":CopilotChatFix<cr>", { desc = "AI Fix" })
-map("v", "<leader>co", ":CopilotChatOptimize<cr>", { desc = "AI Optimize" })
-map("v", "<leader>cr", ":CopilotChatReview<cr>", { desc = "AI Review" })
+map("n", "<leader>ce", ":CopilotChatExplain<cr>", { desc = "AI Explain" })
+map("n", "<leader>cf", ":CopilotChatFix<cr>", { desc = "AI Fix" })
+map("n", "<leader>co", ":CopilotChatOptimize<cr>", { desc = "AI Optimize" })
+map("n", "leader>cr", ":CopilotChatReview<cr>", { desc = "AI Review" })
