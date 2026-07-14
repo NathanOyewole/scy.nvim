@@ -1,6 +1,7 @@
 -- ===============================
 -- Core Options
 -- ===============================
+
 vim.opt.termguicolors = true
 vim.opt.expandtab = true
 vim.opt.tabstop = 2
@@ -16,14 +17,14 @@ vim.g.mapleader = " "
 -- ===============================
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable",
-		lazypath,
-	})
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
+    lazypath,
+  })
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -52,9 +53,9 @@ vim.cmd([[highlight IndentBlanklineContextChar guifg=#7f848e]])
 -- IndentBlankline lazy highlights
 -- ===============================
 vim.api.nvim_create_autocmd("User", {
-	pattern = "IndentBlanklineReady",
-	callback = function()
-		vim.cmd([[highlight IndentBlanklineChar guifg=#3b4048]])
-		vim.cmd([[highlight IndentBlanklineContextChar guifg=#7f848e]])
-	end,
+  pattern = "IndentBlanklineReady",
+  callback = function()
+    vim.cmd([[highlight IndentBlanklineChar guifg=#3b4048]])
+    vim.cmd([[highlight IndentBlanklineContextChar guifg=#7f848e]])
+  end,
 })
